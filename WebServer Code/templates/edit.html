@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block container %}
+<form method="post">
+	<div class="row">
+		<label for="idField" class="form-label">ID</label>
+		<input type="number" class=form-control" id="idField" name="idField" value="{{ record[0] }}" readonly />
+	</div>
+	<div class="row">
+		<label for="nameField" class="form-label">Name</label>
+		<input type="text" class=form-control" id="nameField" name="nameField" value="{{ record[4] if record[4] != None else "" }}" />
+	</div>
+	<div class="row">
+		<label for="commentField" class="form-label">Comment</label>
+		<textarea class=form-control" id="commentField" name="commentField" rows="3">{{record[5] if record[5] != None else ""}}</textarea>
+	</div>
+	<div class="row">
+		<input type="submit" value="Submit">
+	</div>
+</form>
+{% endblock %}

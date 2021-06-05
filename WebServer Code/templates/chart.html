@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block container %}
+<div>
+	<canvas id="chart" width="500" height="400"></canvas>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.1/chart.min.js'></script>
+<script>
+	var chartCanvas = document.getElementById('chart').getContext('2d');
+	var data = {
+		labels: [{%for item in records %}new Date("{{ item[3].strftime('%d %b %Y %H:%M:%S') }}"), {% endfor %}],
+		datasets: [{
+			label: 'Velocity over Time',
+			data: [
+			{% for item in records %}{ x: new Date("{{ item[3].strftime('%d %b %Y %H:%M:%S') }}"), y: {{ item[1] }} },{% endfor %}
+			],
+			fill: false,
+			borderColor: 'rgb(75,192,192)'
+		}]
+	};
+	var options = {
+		scales: {
+			y: [{
+				title: { display: true,  text:'Speed', color: "#000000" }
+			}],
+			x: [{
+				type: 'time',
+				time: {
+					'second': 'MMM DD',
+					'minute': 'MMM DD',
+					'hour': 'MMM DD',
+					'day': 'MMM DD',
+					'month': 'MMM DD',
+					'year': 'MMM DD'
+				}
+			}]
+		}
+	};
+	var lineGraph = new Chart(chartCanvas, {
+		type: 'line',
+		data: data,
+		options: options
+	});
+</script>
+{% endblock %}
